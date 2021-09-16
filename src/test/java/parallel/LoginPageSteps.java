@@ -58,18 +58,30 @@ public class LoginPageSteps {
 		loginPage.clickNext();
 		loginPage.enterPassword(loginCredentials.get(0).get("Password"));
 		loginPage.clickLogin();
-		
-		Assert.assertTrue(homePage.isUserNavigatedtoHomePage(),"User not navigated to Home Page.");
-		
+
+		Assert.assertTrue(homePage.isUserNavigatedtoHomePage(), "User not navigated to Home Page.");
+
 		String actualProfileName = homePage.getProfileName().trim();
 		String expectedProfileName = loginCredentials.get(0).get("UserLoginName");
 
 		// Verifying User Profile Name on Home Page.
 		Assert.assertEquals(actualProfileName, expectedProfileName, "User Profile Name did not match.");
 
-		// Validating 'Create an authorization' button is displayed for Client User Access
-		Assert.assertTrue(homePage.isCreateAnAuthorizationButtonDisplayed(),
-				"Create an authorization button is not displayed for Client user access");
+		String userAccessType = loginCredentials.get(0).get("UserAccessType");
+
+		if (userAccessType.equals("Client")) {
+			
+			// Validating 'Create an authorization' button is displayed for Client user
+			// access
+			Assert.assertTrue(homePage.isCreateAnAuthorizationButtonDisplayed(),
+					"Create an authorization button is not displayed for Client user access");
+		} else if (userAccessType.equals("Trasnferee")) {
+			
+			// Validating 'Create an authorization' button is NOT displayed for Trasnferee
+			// user access
+			Assert.assertFalse(homePage.isCreateAnAuthorizationButtonDisplayed(),
+					"Create an authorization button is displayed for Trasnferee user access");
+		}
 
 	}
 

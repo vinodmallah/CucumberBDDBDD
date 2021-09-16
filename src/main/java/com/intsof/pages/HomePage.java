@@ -1,6 +1,8 @@
 package com.intsof.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
 import com.intsof.factory.DriverFactory;
@@ -15,11 +17,18 @@ public class HomePage {
 
 	private By createAnAuthorizationButton = By.id("creatAuthForm");
 	private By initiationSuccessMessage = By.xpath("//div[@id='growls']//div[@class='growl-message']");
+	private By addExpenseButton = By.xpath("//span[@class='AddExpenseLinkTextFont'][contains(string(),'add')]/parent::div");
 
 	private ElementUtil elementUtil;
 
 	public HomePage(WebDriver driver) {
 		elementUtil = new ElementUtil(driver);
+	}
+	
+	public String getTitle() {
+		
+		return elementUtil.getPageTitle();
+		
 	}
 
 	public String getProfileName() {
@@ -32,8 +41,7 @@ public class HomePage {
 
 		try {
 			acceptCookie();
-			elementUtil.waitForInvisibilityOfElement(acceptCookieButton);
-			// elementUtil.waitForInvisibilityOfElement(programActivityLoader);
+			elementUtil.waitForInvisibilityOfElement(acceptCookieButton);			
 		} catch (Exception e) {
 		}
 
@@ -73,9 +81,12 @@ public class HomePage {
 	}
 
 	public boolean isCreateAnAuthorizationButtonDisplayed() {
-
-		elementUtil.waitForVisibilityOfElement(createAnAuthorizationButton);
+		try {
+		elementUtil.waitForVisibilityOfElementNoWait(createAnAuthorizationButton);
 		return elementUtil.isElementDisplayed(createAnAuthorizationButton);
+		}catch(TimeoutException | NoSuchElementException e) {
+			return false;
+		}
 
 	}
 
@@ -83,6 +94,10 @@ public class HomePage {
 
 		elementUtil.waitForVisibilityOfElement(initiationSuccessMessage);
 		return elementUtil.get(initiationSuccessMessage);
+	}
+
+	public void clickAddExpense() {		
+		elementUtil.click(addExpenseButton);
 	}
 
 }

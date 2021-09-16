@@ -79,10 +79,10 @@ public class CreateAuthorizationPage {
 
 	public void inputNewAuthorizationInformationAndContinue(List<Map<String, String>> newEmployeeName) {
 
-		elementUtil.staticWait(5000L);
+		elementUtil.waitForFrameToLoad(createAuthorizationIFrame);
 		elementUtil.waitForVisibilityOfElement(createAuthorizationIFrame);
 		elementUtil.switchToFrame(createAuthorizationIFrame);
-		elementUtil.waitForVisibilityOfElement(createNewAuthorizationText);
+		elementUtil.waitForVisibilityOfElement(createNewAuthorizationText);		
 		elementUtil.selectRadioButton(manuallyInputEmpInfo_Radio);
 		elementUtil.click(createAuthContinueButton);
 		elementUtil.waitForVisibilityOfElement(firstNameNewAuthorization_InputField);

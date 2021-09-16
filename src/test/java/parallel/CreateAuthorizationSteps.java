@@ -26,8 +26,8 @@ public class CreateAuthorizationSteps {
 				"Create an authorization button is not displayed for Client user access");
 	}
 
-	@Given("I click on Create an authorization button to create new initiation, enter following details and click on continue")
-	public void i_click_on_create_an_authorization_button_to_create_new_initiation_enter_following_details_and_click_on_continue(io.cucumber.datatable.DataTable dataTable) {
+	@Given("I click on Create an authorization button to create new initiation, I enter following details and click on continue")
+	public void i_click_on_create_an_authorization_button_to_create_new_initiation_I_enter_following_details_and_click_on_continue(io.cucumber.datatable.DataTable dataTable) {
 
 		createAuthorizationPage = homePage.clickCreateAnAuthorization();
 		createAuthorizationPage.inputNewAuthorizationInformationAndContinue(dataTable.asMaps());

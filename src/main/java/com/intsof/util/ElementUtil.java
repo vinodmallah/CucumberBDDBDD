@@ -2,6 +2,7 @@ package com.intsof.util;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -43,7 +44,12 @@ public class ElementUtil {
 
 		wait = new WebDriverWait(driver, 20L);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+	
+	public void waitForVisibilityOfElementNoWait(By locator) {
 
+		wait = new WebDriverWait(driver, 2L);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
 	public void waitForInvisibilityOfElement(By locator) {
@@ -52,7 +58,7 @@ public class ElementUtil {
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
 
 	}
-	
+
 	public void waitForTestToBePresentInElementLocated(By locator, String text) {
 
 		wait = new WebDriverWait(driver, 20L);
@@ -71,9 +77,9 @@ public class ElementUtil {
 
 	}
 
-	public void selectByVisibleText(By relocationType_Dropdown, String visibleText) {
+	public void selectByVisibleText(By dropdown, String visibleText) {
 
-		Select select = new Select(getElement(relocationType_Dropdown));
+		Select select = new Select(getElement(dropdown));
 		select.selectByVisibleText(visibleText);
 	}
 
@@ -82,14 +88,117 @@ public class ElementUtil {
 	}
 
 	public void staticWait(long waitTime) {
-		
+
 		try {
 			Thread.sleep(waitTime);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+
+	public void check(By checkbox) {
+		
+		if(!getElement(checkbox).isSelected()) {
+			getElement(checkbox).click();
+		}		
 		
 	}
+
+	public void clickAndWait(By locator) {	
+		waitForElementToBeRefreshed(locator);		
+		getElement(locator).click();		
+	}
+
+	public void waitForElementToBeRefreshed(By locator) {
+		wait = new WebDriverWait(driver, 15L);
+		wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(locator)));			
+	}
+
+	public void waitForFrameToLoad(By locator) {		
+		wait = new WebDriverWait(driver, 15L);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
+	}
+
+	public String getattribute(By locator, String value) {
+		
+		return getElement(locator).getAttribute(value);
+		
+	}
+
+	public void checkIfEmpty(By field, String enteredValue) {
+		
+		getElement(field).sendKeys(Keys.TAB);
+		
+		if((getElement(field).getText()).equals(enteredValue))
+			return;
+		else {			
+			getElement(field).clear();	
+			getElement(field).sendKeys(enteredValue);
+		}
+		
+	}
+
+	public void waitForFrameToLoad(WebElement element) {
+		
+		wait = new WebDriverWait(driver, 15L);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
+		
+	}
+
+	public void waitForVisibilityOfElement(WebElement element) {
+		
+		wait = new WebDriverWait(driver, 20L);
+		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+
+	public void switchToFrame(WebElement element) {
+		driver.switchTo().frame(element);
+				
+	}
+
+	public void selectByVisibleText(WebElement element, String visibleText) {
+		Select select = new Select(element);
+		select.selectByVisibleText(visibleText);		
+	}
+
+	public void click(WebElement element) {		
+		element.click();
+	}
+
+	public void set(WebElement element, String value) {
+		element.sendKeys(value);		
+	}
+
+	public void check(WebElement element) {
+		
+		if(!element.isSelected()) {
+			element.click();
+		}	
+	}
+
+	public void clickAndWait(WebElement element) {
+		waitForElementToBeRefreshed(element);		
+		element.click();
+		
+	}
+
+	private void waitForElementToBeRefreshed(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 15L);
+		wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(element)));		
+	}
+
+	public String get(WebElement element) {		
+		return element.getText();
+	}
+
+	public String getPageTitle() {
+		
+		return driver.getTitle();
+	}
+
+	
+	
 
 }

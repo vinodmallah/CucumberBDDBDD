@@ -6,13 +6,13 @@ Feature: Create Authorization Feature
   Background: User is Logged in to MobilityX application with Client access
     Given User is already logged in to MobilityX application with following credentials
       | UserLoginName | UserName                | Password   | UserAccessType |
-      | Rohit Sharma  |  | relonetng1 | Client         |
+      |   |  |  | Client         |
 
   Scenario: Validating create new transfer or assignment in Aires application
     Given I am on home page of MobilityX application
-    And I click on Create an authorization button to create new initiation, enter following details and click on continue
+    And I click on Create an authorization button to create new initiation, I enter following details and click on continue
       | FirstName | LastName |
-      | Merope    | Rovalo   |
+      | Rakesh    | Narayan  |
     And I create new transfer or assignment authorization by entering following information on initiation form
       | AuthorizationType         | RelocationPolicy | OriginCity  | OriginState | OriginCountry | DestinationCity | DestinationState | DestinationCountry | HomeStatus | AssignmentType | AuthorizedBy |
       | Pre-Acceptance Initiation | Domestic Policy  | Los Angeles | California  | USA           | Huntsville      | Alabama          | USA                | Renter     | Commuter       | Vinod Mallah |
